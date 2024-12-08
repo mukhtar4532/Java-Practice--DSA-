@@ -123,6 +123,69 @@ class Array1Dbasics {
 
   }
 
+  // Kadane's Algorithm
+  // Print max Subarrays sum ----->>>>>> O(n)
+
+  public static void subArraySum3(int arr[]) {
+    int currSum = 0;
+    int maxSum = Integer.MIN_VALUE;
+
+    for (int i = 0; i < arr.length; i++) {
+      currSum = currSum + arr[i];
+      if (currSum < 0) {
+        currSum = 0;
+      }
+      maxSum = Math.max(maxSum, currSum);
+    }
+
+    System.out.println("maxSum of subArraySum is " + maxSum);
+  }
+
+  // Trapping RainWater
+  public static int trappedWater(int height[]) {
+    int n = height.length;
+
+    // calculate Left max boundry
+    int leftMax[] = new int[n];
+    leftMax[0] = height[0];
+    for (int i = 1; i < height.length; i++) {
+      leftMax[i] = Math.max(height[i], leftMax[i - 1]);
+    }
+    System.out.println("leftMax -- ");
+    for (int i = 0; i < leftMax.length; i++) {
+      System.out.print(leftMax[i] + " ");
+    }
+    System.out.println();
+
+    // calculate Right max boundry
+    int rightMax[] = new int[n];
+    rightMax[n - 1] = height[n - 1];
+    for (int i = n - 2; i >= 0; i--) {
+      rightMax[i] = Math.max(height[i], rightMax[i + 1]);
+    }
+    System.out.println("RightMax -- ");
+    for (int i = 0; i < rightMax.length; i++) {
+      System.out.print(rightMax[i] + " ");
+    }
+    System.out.println();
+
+    // calculate trapped water
+    int trappedWater = 0;
+    int totalTrappedWater = 0;
+    // int waterLevel = 0;
+    for (int i = 0; i < height.length; i++) {
+      int waterLevel = Math.min(leftMax[i], rightMax[i]);
+      trappedWater = waterLevel - height[i];
+      if (trappedWater < 0) {
+        trappedWater = 0;
+      }
+      totalTrappedWater += trappedWater;
+      System.out.println("Current trappedWater is " + trappedWater);
+    }
+
+    return totalTrappedWater;
+  }
+
   public static void main(String[] args) {
     // System.out.println("Hello");
     // Scanner sc = new Scanner(System.in);
@@ -145,11 +208,18 @@ class Array1Dbasics {
     // System.out.print(arr[i] + " ");
     // }
 
-    int arr[] = { 1, -2, 6, -1, 3 };
+    // int arr[] = { 1, -2, 6, -1, 3 };
+    // int arr[] = { -2, -3, 4, -1, -2, 1, 5, -3 };
     // printPairs(arr);
     // printSubarrays(arr);
     // subArraySum(arr);
-    subArraySum2(arr);
+    // subArraySum2(arr);
+    // subArraySum3(arr);
+
+    // TrappedWater
+    int height[] = { 4, 2, 0, 6, 3, 2, 5 };
+    int trappedWater = trappedWater(height);
+    System.out.println("Total trappedWater is " + trappedWater);
 
   }
 }
