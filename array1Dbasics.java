@@ -186,6 +186,22 @@ class Array1Dbasics {
     return totalTrappedWater;
   }
 
+  // Buy & sell stocks O(n)
+  public static int buyAndSellStock(int prices[]) {
+    int buyingPrice = Integer.MAX_VALUE;
+    int maxProfit = 0;
+
+    for (int i = 0; i < prices.length; i++) {
+      if (buyingPrice < prices[i]) {
+        int profit = prices[i] - buyingPrice;
+        maxProfit = Math.max(maxProfit, profit);
+      } else {
+        buyingPrice = prices[i];
+      }
+    }
+    return maxProfit;
+  }
+
   public static void main(String[] args) {
     // System.out.println("Hello");
     // Scanner sc = new Scanner(System.in);
@@ -217,9 +233,13 @@ class Array1Dbasics {
     // subArraySum3(arr);
 
     // TrappedWater
-    int height[] = { 4, 2, 0, 6, 3, 2, 5 };
-    int trappedWater = trappedWater(height);
-    System.out.println("Total trappedWater is " + trappedWater);
+    // int height[] = { 4, 2, 0, 6, 3, 2, 5 };
+    // int trappedWater = trappedWater(height);
+    // System.out.println("Total trappedWater is " + trappedWater);
+
+    // Buy & Sell stocks
+    int prices[] = { 7, 1, 5, 3, 6, 4 };
+    System.out.println("Max profit is " + buyAndSellStock(prices));
 
   }
 }
